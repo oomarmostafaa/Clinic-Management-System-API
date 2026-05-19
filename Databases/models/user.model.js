@@ -24,7 +24,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ["admin", "doctor", "patient"],
-      default: "Patient",
+      default: "patient",
     },
     resetPasswordToken: String,
     resetPasswordExpires: Date,

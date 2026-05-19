@@ -6,6 +6,7 @@ import catchError from "../../middleware/catchError.js";
 import AppError from "../../utils/appError.js";
 import crypto from "crypto";
 import { sendEmail } from "../../utils/nodemailer.sendEmail.js";
+
 export const signUp = catchError(async (req, res, next) => {
   let user = new userModel(req.body);
   if (await userModel.findOne({ email: user.email })) {
