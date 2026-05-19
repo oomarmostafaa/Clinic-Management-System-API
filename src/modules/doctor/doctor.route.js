@@ -1,24 +1,30 @@
 import { Router } from "express";
 import { allowTo, protectedRoutes } from "../Auth/auth.controller.js";
 import { validation } from "../../middleware/validation.js";
-import { createDoctor } from "./doctor.controller.js";
+import { createDoctor, deleteDoctor, filterBySpecialty, getAllDoctors, getDoctorById, getSchedule, updateDoctor } from "./doctor.controller.js";
+import { createDoctorValidation, updateDoctorValidation } from "./doctor.validation.js";
 
 const doctorRouter = Router();
 
-doctorRouter.post("/", protectedRoutes, allowTo("admin"), createDoctor);
+// (admin only) can create doctor
+doctorRouter.post("/", protectedRoutes, allowTo("admin"), validation(createDoctorValidation), createDoctor);
 
-// doctorRouter.get("/", getDoctors);
+// get all doctors (public)
+doctorRouter.get("/", protectedRoutes , getAllDoctors);
 
-// doctorRouter.get("/:id", getDoctorById);
+// get doctor by ID (public)
+doctorRouter.get("/:id", protectedRoutes, getDoctorById);
 
-// doctorRouter.put("/:id", protectedRoutes, allowTo("admin"), updateDoctor);
+// update doctor (admin only, doctor can update their own profile)  
+doctorRouter.put("/:id", protectedRoutes, validation(updateDoctorValidation), updateDoctor);
 
-// doctorRouter.delete("/:id", protectedRoutes, allowTo("admin"), deleteDoctor);
+// Delete doctor (admin only, doctor can delete their own profile)  
+doctorRouter.delete("/:id", protectedRoutes, allowTo("admin"), deleteDoctor);
 
-// doctorRouter.get("/specialty/:specialty", filterBySpecialty);
+// get doctor schedule (public)
+doctorRouter.get("/:id/schedule",protectedRoutes, getSchedule);
 
-// doctorRouter.get("/:id/schedule", getSchedule);
-
-// doctorRouter.put("/:id/schedule", protectedRoutes, allowTo("admin","doctor"), updateSchedule);
+// filter doctors by specialty (public)
+doctorRouter.get("/specialty/:specialty",protectedRoutes, filterBySpecialty);
 
 export default doctorRouter;

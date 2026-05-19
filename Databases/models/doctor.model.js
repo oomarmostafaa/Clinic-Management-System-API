@@ -6,6 +6,7 @@ const doctorSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      unique: true,
     },
     specialization: {
       type: String,
@@ -22,7 +23,7 @@ const doctorSchema = new Schema(
         to: String, // "15:00"
       },
     ],
-
+    
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true },
