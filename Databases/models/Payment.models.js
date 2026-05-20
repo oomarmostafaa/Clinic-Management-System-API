@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
+
 const PaymentSchema = new mongoose.Schema({
-    bookingId: {
+  bookingId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Booking",
     required: true,
@@ -8,13 +10,15 @@ const PaymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-    status: {
+  paymentStatus: {
     type: String,
     enum: ["pending", "completed", "failed"],
     default: "pending",
   },
   transactionId: {
     type: String,
+    required: false,
+    default: null,
   },
 }, { timestamps: true });
 

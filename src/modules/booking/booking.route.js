@@ -1,16 +1,7 @@
 import { Router } from "express";
 import { allowTo, protectedRoutes } from "../Auth/auth.controller.js";
 import { validation } from "../../middleware/validation.js";
-import {
-  createBooking,
-  getAllBookings,
-  getBookingById,
-  getMyBookings,
-  getDoctorBookings,
-  deleteBooking,
-  confirmBooking,
-  completeBooking,
-} from "./booking.controller.js";
+import {createBooking,getAllBookings,getMyBookings,getDoctorBookings,deleteBooking,confirmBooking,completeBooking,} from "./booking.controller.js";
 import { createBookingSchema } from "./booking.validation.js";
 
 const bookingRouter = Router();
