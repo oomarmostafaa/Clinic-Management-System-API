@@ -74,61 +74,54 @@ export const createCheckoutSession = catchError(async (req, res, next) => {
     sessionId: session.id,
   });
 });
-// صفحة نجاح الدفع - بتستقبل session_id من Stripe وتسجل الدفع
-export const paymentSuccess = catchError(async (req, res) => {
+// 2. Stripe Webhook - المنطق الأساسي لتحديث قاعدة البيانات
+export const stripeWebhook = catchError(async (req, res) => {
   const stripe = getStripe();
-  const { session_id } = req.query;
-
-  console.log("✅ paymentSuccess called, session_id:", session_id);
-
-  if (!session_id) {
-    return res.send(`
-      <h1>⚠️ Missing session ID</h1>
-      <p>No session ID provided.</p>
-    `);
-    
-  }
+  const sig = req.headers["stripe-signature"];
+  let event;
 
   try {
-    // 1. جلب الـ session من Stripe
-    const session = await stripe.checkout.sessions.retrieve(session_id);
-    console.log("📦 Session retrieved, payment_status:", session.payment_status, "| payment_intent:", session.payment_intent);
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    return res.status(400).json({ message: `Webhook Error: ${err.message}` });
+  }
 
-    if (session.payment_status !== "paid") {
-      return res.status(400).send(`
-        <h1>⏳ Payment Not Completed</h1>
-        <p>Your payment was not completed. Status: ${session.payment_status}</p>
-      `);
-    }
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object;
+    const bookingId = session.metadata.bookingId; 
 
-    // 2. تحديث سجل الدفع (PaymentModel)
-    // ملاحظة: نستخدم session.id للبحث لأننا قمنا بتخزينه في البداية كـ transactionId
+    // تحديث سجل الدفع باستخدام session.id (الذي خزناه عند الإنشاء كـ transactionId مؤقت)
     const payment = await PaymentModel.findOneAndUpdate(
-      { transactionId: session.id },
-      { paymentStatus: "completed", transactionId: session.payment_intent || session.id },
+      { transactionId: session.id }, 
+      { paymentStatus: "completed", transactionId: session.payment_intent },
       { new: true }
     );
 
-    if (payment) {
-      // 3. تحديث سجل الحجز (BookingModel) ليصبح "paid"
-      await BookingModel.findByIdAndUpdate(payment.bookingId, { paymentStatus: "paid" });
+    // تحديث الحجز ليصبح "مدفوع" (نستخدم الـ ID من الـ metadata أو من السجل المحدث)
+    const targetBookingId = bookingId || payment?.bookingId;
+    if (targetBookingId) {
+      await BookingModel.findByIdAndUpdate(targetBookingId, { paymentStatus: "paid" });
     }
-
-    res.send(`
-      <h1>✅ Payment Successful!</h1>
-      <p>Your booking has been paid successfully.</p>
-      <p>Amount: EGP ${session.amount_total / 100}</p>
-      <a href="/">Go Home</a>
-    `);
-  } catch (err) {
-    console.error("❌ Error in paymentSuccess:", err.message, err);
-    res.send(`
-      <h1>❌ Error</h1>
-      <p>Could not verify payment: ${err.message}</p>
-    `);
   }
+
+  res.status(200).json({ received: true });
 });
-//صفحة إلغاء الدفع   
+
+// 3. صفحة نجاح الدفع - للعرض فقط للمستخدم
+export const paymentSuccess = catchError(async (req, res) => {
+  res.send(`
+    <div style="text-align:center; padding-top: 50px; font-family: sans-serif;">
+      <h1 style="color: green;">✅ Payment Successful!</h1>
+      <p>Your booking is being confirmed. Thank you!</p>
+      <a href="/" style="text-decoration: none; color: blue;">Back to Home</a>
+    </div>
+  `);
+});
+// 4. صفحة فشل الدفع - للعرض فقط للمستخدم
 export const paymentCancel = catchError(async (req, res) => {
   const { bookingId } = req.query;
 

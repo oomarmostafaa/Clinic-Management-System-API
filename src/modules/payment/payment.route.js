@@ -8,7 +8,7 @@ const paymentRouter = Router();
 // POST /api/v1/payments/create-checkout - إنشاء رابط دفع Stripe
 paymentRouter.post("/create-checkout", protectedRoutes, createCheckoutSession);
 
-// صفحات الـ Redirect من Stripe (مش محتاجة token) + بيشتغلوا لوحدهم مع الي فوقيهم 
+// صفحات الـ Redirect للعرض للمستخدم (الـ Webhook هو الذي يحدث البيانات)
 paymentRouter.get("/success", paymentSuccess);
 paymentRouter.get("/cancel", paymentCancel);
 
