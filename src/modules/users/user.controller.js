@@ -52,6 +52,26 @@ export const DeleteUserprofile = catchError(async (req, res, next) => {
    await userModel.findByIdAndDelete(req.user._id);
   res.json({ message: "User profile deleted successfully" });
 },
-
-
 );
+
+// Search users by name or email (admin only)
+export const searchUsers = catchError(async (req, res, next) => {
+  // البحث عن القيمة في keyword أو name أو email لزيادة المرونة
+  let searchKey = req.query.keyword || req.query.name || req.query.email;
+
+  if (!searchKey) {
+    return next(new AppError("Please provide a search keyword", 400));
+  }
+
+  // تنظيف الكلمة من علامات التنصيص إذا وجدت (مثل "omar@gmail.com")
+  const keyword = searchKey.replace(/['"]+/g, '');
+
+  const users = await userModel.find({
+    $or: [
+      { name: { $regex: keyword, $options: "i" } }, // Case-insensitive search for name
+      { email: { $regex: keyword, $options: "i" } }, // Case-insensitive search for email
+    ],
+  }).select("-password"); // Exclude password from results for security
+
+  res.status(200).json({ message: "Users retrieved successfully", count: users.length, users });
+});

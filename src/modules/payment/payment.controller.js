@@ -179,3 +179,26 @@ export const getPaymentById = catchError(async (req, res, next) => {
   if (!payment) return next(new AppError("Payment not found", 404));
   res.status(200).json({ message: "Payment retrieved successfully", payment });
 });
+
+// Search Payments by transactionId or paymentStatus (Admin only)
+export const searchPayments = catchError(async (req, res, next) => {
+  let searchKey = req.query.keyword || req.query.transactionId || req.query.status;
+
+  if (!searchKey) {
+    return next(new AppError("Please provide a search keyword,transactionId=pending...completed...failed", 400));
+  }
+
+  const keyword = searchKey.replace(/['"]+/g, '');
+
+  const payments = await PaymentModel.find({
+    $or: [
+      { transactionId: { $regex: keyword, $options: "i" } },
+      { paymentStatus: { $regex: keyword, $options: "i" } },
+    ],
+  }).populate({ path: "bookingId", populate: [
+    { path: "doctorId", select: "specialization price" },
+    { path: "patientId", populate: { path: "userId", select: "name email" } },
+  ]});
+
+  res.status(200).json({ message: "Payments retrieved successfully", count: payments.length, payments });
+});

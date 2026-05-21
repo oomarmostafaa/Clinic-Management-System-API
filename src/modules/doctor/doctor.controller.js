@@ -85,3 +85,34 @@ export const filterBySpecialty = catchError(async (req, res, next) => {
   }
   res.status(200).json({ results: doctors.length,doctors });
 });
+
+// Search doctors by name, email, or specialization
+export const searchDoctors = catchError(async (req, res, next) => {
+  let searchKey = req.query.keyword || req.query.name || req.query.email;
+
+  if (!searchKey) {
+    return next(new AppError("Please provide a search keyword", 400));
+  }
+
+  const keyword = searchKey.replace(/['"]+/g, '');
+
+  // 1. البحث في موديل المستخدمين أولاً لجلب الـ IDs للأسماء أو الإيميلات المطابقة
+  const users = await userModel.find({
+    $or: [
+      { name: { $regex: keyword, $options: "i" } },
+      { email: { $regex: keyword, $options: "i" } },
+    ],
+  }).select("_id");
+
+  const userIds = users.map(u => u._id);
+
+  // 2. البحث في الأطباء بناءً على الـ userIds أو التخصص
+  const doctors = await doctorModel.find({
+    $or: [
+      { userId: { $in: userIds } },
+      { specialization: { $regex: keyword, $options: "i" } }
+    ]
+  }).populate({ path: "userId", select: "name email" });
+
+  res.status(200).json({ message: "Doctors retrieved successfully", count: doctors.length, doctors });
+});

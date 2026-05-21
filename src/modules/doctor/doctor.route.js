@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { allowTo, protectedRoutes } from "../Auth/auth.controller.js";
 import { validation } from "../../middleware/validation.js";
-import { createDoctor, deleteDoctor, filterBySpecialty, getAllDoctors, getDoctorById, getSchedule, updateDoctor } from "./doctor.controller.js";
+import { createDoctor, deleteDoctor, filterBySpecialty, getAllDoctors, getDoctorById, getSchedule, updateDoctor, searchDoctors } from "./doctor.controller.js";
 import { createDoctorValidation, updateDoctorValidation } from "./doctor.validation.js";
 
 const doctorRouter = Router();
@@ -11,6 +11,9 @@ doctorRouter.post("/", protectedRoutes, allowTo("admin"), validation(createDocto
 
 // get all doctors (public)
 doctorRouter.get("/", protectedRoutes , getAllDoctors);
+
+// search doctors (admin only)
+doctorRouter.get("/search", protectedRoutes, allowTo("admin"), searchDoctors);
 
 // get doctor by ID (public)
 doctorRouter.get("/:id", protectedRoutes, getDoctorById);

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { allowTo, protectedRoutes } from "../Auth/auth.controller.js";
 import { validation } from "../../middleware/validation.js";
-import {createBooking,getAllBookings,getMyBookings,getDoctorBookings,deleteBooking,confirmBooking,completeBooking,} from "./booking.controller.js";
+import {createBooking,getAllBookings,getMyBookings,getDoctorBookings,deleteBooking,confirmBooking,completeBooking,searchBookings} from "./booking.controller.js";
 import { createBookingSchema } from "./booking.validation.js";
 
 const bookingRouter = Router();
@@ -11,6 +11,9 @@ bookingRouter.post("/", protectedRoutes, validation(createBookingSchema), create
 
 // GET /api/v1/bookings - Get all bookings (Admin only)
 bookingRouter.get("/", protectedRoutes, allowTo("admin"), getAllBookings);
+
+// Search Bookings (Admin only)
+bookingRouter.get("/search", protectedRoutes, allowTo("admin"), searchBookings);
 
 // GET /api/v1/bookings/my-bookings - Get current patient's bookings
 bookingRouter.get("/my-bookings", protectedRoutes, getMyBookings);

@@ -3,6 +3,7 @@ import catchError from "../../middleware/catchError.js";
 import AppError from "../../utils/appError.js";
 import e from "express";
 import PatientModel from "../../../Databases/models/Patient.model.js";
+import userModel from "../../../Databases/models/user.model.js";
 
 export const addPatient = catchError(async (req, res, next) => {
 
@@ -65,6 +66,32 @@ export const updatePatient = catchError(async (req, res, next) => {
     data: patient
   });
 
+});
+
+// Search patients by name or email (admin only)
+export const searchPatients = catchError(async (req, res, next) => {
+  let searchKey = req.query.keyword || req.query.name || req.query.email;
+
+  if (!searchKey) {
+    return next(new AppError("Please provide a search keyword", 400));
+  }
+
+  const keyword = searchKey.replace(/['"]+/g, '');
+
+  const users = await userModel.find({
+    $or: [
+      { name: { $regex: keyword, $options: "i" } },
+      { email: { $regex: keyword, $options: "i" } },
+    ],
+  }).select("_id");
+
+  const userIds = users.map(u => u._id);
+
+  const patients = await PatientModel.find({
+    userId: { $in: userIds }
+  }).populate({ path: "userId", select: "name email" });
+
+  res.status(200).json({ message: "Patients retrieved successfully", count: patients.length, patients });
 });
 export const deletePatient = catchError(async (req, res, next) => {
 

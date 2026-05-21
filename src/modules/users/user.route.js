@@ -7,6 +7,7 @@ import {
   getUserProfile,
   updateUser,
   updateUserprofile,
+  searchUsers,
 } from "./user.controller.js";
 import { allowTo, protectedRoutes } from "../Auth/auth.controller.js";
 import { validation } from "../../middleware/validation.js";
@@ -20,6 +21,9 @@ userRouter.get("/profile", protectedRoutes, getUserProfile); // All users
 userRouter.put("/profile", protectedRoutes, validation(updateUserProfileSchema), updateUserprofile); // All users
 
 userRouter.delete("/profile", protectedRoutes, DeleteUserprofile);
+
+// Search users by name or email (admin only)
+userRouter.get("/search", protectedRoutes, allowTo("admin"),searchUsers);
 
 userRouter.get("/:id", protectedRoutes, allowTo("admin"), getUserbyId); // Admin only
 

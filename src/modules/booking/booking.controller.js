@@ -158,3 +158,27 @@ export const completeBooking = catchError(async (req, res, next) => {
 
   res.status(200).json({ message: "Booking completed successfully", booking: populatedBooking });
 });
+
+// Search Bookings by status or paymentStatus (Admin only)
+export const searchBookings = catchError(async (req, res, next) => {
+  let searchKey = req.query.keyword || req.query.status || req.query.paymentStatus;
+
+  if (!searchKey) {
+    return next(new AppError(
+      "Please provide a search keyword...status=pending...confirmed...completed", 400));
+  }
+
+  const keyword = searchKey.replace(/['"]+/g, '');
+
+  const bookings = await BookingModel.find({
+    $or: [
+      { status: { $regex: keyword, $options: "i" } },
+      { paymentStatus: { $regex: keyword, $options: "i" } },
+    ],
+  }).populate([
+    { path: "doctorId", select: "specialization price" },
+    { path: "patientId", populate: { path: "userId", select: "name email" } }
+  ]);
+
+  res.status(200).json({ message: "Bookings retrieved successfully", count: bookings.length, bookings });
+});

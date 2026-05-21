@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { allowTo, protectedRoutes } from "../Auth/auth.controller.js";
 import { validation } from "../../middleware/validation.js";
-import {createCheckoutSession,getPaymentById,getPaymentByBookingId,getAllPayments,paymentSuccess,paymentCancel,} from "./payment.controller.js";
+import {createCheckoutSession,getPaymentById,getPaymentByBookingId,getAllPayments,paymentSuccess,paymentCancel,searchPayments} from "./payment.controller.js";
 
 const paymentRouter = Router();
 
@@ -14,6 +14,9 @@ paymentRouter.get("/cancel", paymentCancel);
 
 // GET /api/v1/payments - كل المعاملات   (Admin)
 paymentRouter.get("/", protectedRoutes, allowTo("admin"), getAllPayments);
+
+// Search payments (Admin)
+paymentRouter.get("/search", protectedRoutes, allowTo("admin"), searchPayments);
 
 // GET /api/v1/payments/booking/:bookingId - دفعة حسب booking ID
 paymentRouter.get("/booking/:bookingId", protectedRoutes, getPaymentByBookingId);
