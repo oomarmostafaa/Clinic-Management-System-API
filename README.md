@@ -7,12 +7,14 @@ A robust and scalable RESTful API for a Clinic Management System built with **No
 - **Database:** Hosted on MongoDB Atlas.
 - **Deployment:** Vercel.
 
-##  API Documentation & Postman
-You can explore and test the API endpoints using our public Postman collection.
+## 🔗 API Documentation & Postman
+A comprehensive Postman collection is included in the root directory to help you test all API endpoints easily.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](YOUR_POSTMAN_COLLECTION_LINK_HERE)
-
-> **Note:** Make sure to set the `baseUrl` variable in Postman to match the Live Demo URL or your local environment.
+### 🛠 How to Import and Use:
+1. Open **Postman**.
+2. Click the **Import** button in the top left.
+3. Select the file: Clinic Management System API.postman_collection.json.
+4. Once imported, set the collection variable `base_url` to `https://clinic-management-system-api-alpha.vercel.app/` for the live demo or `http://localhost:3000` for local testing.
 
 ## 📊 Database Design (ERD)
 
