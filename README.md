@@ -7,13 +7,60 @@ A robust and scalable RESTful API for a Clinic Management System built with **No
 - **Database:** Hosted on MongoDB Atlas.
 - **Deployment:** Vercel.
 
-## 🚀 API Documentation & Postman (Free)
-To test the API endpoints, follow these steps:
-1. Download the Postman Collection file from this repo: [Download Collection](./postman/Clinic_System_Collection.json)
-2. Open Postman and click on **Import**.
-3. Drag and drop the downloaded JSON file.
+##  API Documentation & Postman
+You can explore and test the API endpoints using our public Postman collection.
 
-> **Pro Tip:** Don't forget to set the `baseUrl` variable in Postman to: `https://clinic-management-system-api-alpha.vercel.app/`
+[![Run in Postman](https://run.pstmn.io/button.svg)](YOUR_POSTMAN_COLLECTION_LINK_HERE)
+
+> **Note:** Make sure to set the `baseUrl` variable in Postman to match the Live Demo URL or your local environment.
+
+## 📊 Database Design (ERD)
+
+The following diagram illustrates the relationships between the core entities in the system.
+
+```mermaid
+erDiagram
+    USER ||--o| DOCTOR : "specializes as (1:1)"
+    USER ||--o| PATIENT : "registers as (1:1)"
+    USER ||--o{ DOCTOR : "created by (Admin)"
+    
+    PATIENT ||--o{ BOOKING : "schedules (1:N)"
+    DOCTOR ||--o{ BOOKING : "receives (1:N)"
+    
+    BOOKING ||--o| PAYMENT : "linked to (1:1)"
+
+    USER {
+        string name
+        string email
+        string role "admin | doctor | patient"
+    }
+
+    DOCTOR {
+        string specialization
+        number price
+        array schedule
+        ObjectId createdBy
+    }
+
+    PATIENT {
+        string phone
+        string medicalHistory
+    }
+
+    BOOKING {
+        date date
+        string status
+        string paymentStatus
+    }
+
+    PAYMENT {
+        number amount
+        string paymentStatus
+        string transactionId
+    }
+```
+
+## 🚀 Features
 
 *   **Multi-Role Auth:** Secure JWT-based RBAC for `Admin`, `Doctor`, and `Patient`.
 *   **Doctor Management:** Specialized profiles, schedule management, and advanced search/filter (by specialty).

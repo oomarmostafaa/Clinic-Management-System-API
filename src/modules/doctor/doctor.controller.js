@@ -1,33 +1,46 @@
 import express from "express";
+import mongoose from "mongoose";
 import catchError from "../../middleware/catchError.js";
 import AppError from "../../utils/appError.js";
 import doctorModel from "../../../Databases/models/doctor.model.js";
 import userModel from "../../../Databases/models/user.model.js";
-import e from "express";
 
 export const createDoctor = catchError(async (req, res, next) => {
   const { userId } = req.body;
-  const alreadyDoctor = await doctorModel.findOne({ userId: req.body.userId });
+  const alreadyDoctor = await doctorModel.findOne({ userId });
   if (alreadyDoctor) {
     return next(new AppError("Doctor already exists", 400));
   }
-  // هنا انا جبت كل بيانات الدكتور من json بس createBY جبتها من protection middleware عشان اعرف مين اللي انشأ الدكتور دا
-  const doctor = await doctorModel.create({
-    ...req.body,
-    createdBy: req.user.id,
-  });
-  const user = await userModel.findByIdAndUpdate(
-    userId,
-    { role: "doctor" },
-    { new: true, runValidators: true },
-  );
-  if (!user) {
-    return next(new AppError("User not found", 404));
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const doctor = await doctorModel.create(
+      [{ ...req.body, createdBy: req.user.id }],
+      { session }
+    );
+
+    const user = await userModel.findByIdAndUpdate(
+      userId,
+      { role: "doctor" },
+      { new: true, runValidators: true, session }
+    );
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await session.commitTransaction();
+    res.status(201).json({ message: "Doctor created successfully", user, doctor: doctor[0] });
+  } catch (error) {
+    await session.abortTransaction();
+    return next(new AppError(error.message, 400));
+  } finally {
+    session.endSession();
   }
-  res
-    .status(201)
-    .json({ message: "Doctor created successfully", user, doctor });
 });
+
 export const getAllDoctors = catchError(async (req, res, next) => {
   const doctors = await doctorModel
     .find()
@@ -74,11 +87,12 @@ export const getSchedule = catchError(async (req, res, next) => {
 export const filterBySpecialty = catchError(async (req, res, next) => {
    const { specialty } = req.params;
     const validSpecialties = ["children", "heart", "skin", "bone"];
-
-  if (!validSpecialties.includes(specialty)) {
+  
+  if (!validSpecialties.includes(specialty.toLowerCase())) {
     return next(new AppError("Invalid specialty", 400));
   }
-    const doctors = await doctorModel.find({ specialization: req.params.specialty }).populate({ path: "userId", select: "name email" });
+
+  const doctors = await doctorModel.find({ specialization: specialty.toLowerCase() }).populate({ path: "userId", select: "name email" });
 
   if (doctors.length === 0) {
     return next(new AppError("No doctors found for this specialty", 404));
@@ -86,17 +100,11 @@ export const filterBySpecialty = catchError(async (req, res, next) => {
   res.status(200).json({ results: doctors.length,doctors });
 });
 
-// Search doctors by name, email, or specialization
 export const searchDoctors = catchError(async (req, res, next) => {
   let searchKey = req.query.keyword || req.query.name || req.query.email;
-
-  if (!searchKey) {
-    return next(new AppError("Please provide a search keyword", 400));
-  }
+  if (!searchKey) return next(new AppError("Please provide a search keyword", 400));
 
   const keyword = searchKey.replace(/['"]+/g, '');
-
-  // 1. البحث في موديل المستخدمين أولاً لجلب الـ IDs للأسماء أو الإيميلات المطابقة
   const users = await userModel.find({
     $or: [
       { name: { $regex: keyword, $options: "i" } },
@@ -105,8 +113,6 @@ export const searchDoctors = catchError(async (req, res, next) => {
   }).select("_id");
 
   const userIds = users.map(u => u._id);
-
-  // 2. البحث في الأطباء بناءً على الـ userIds أو التخصص
   const doctors = await doctorModel.find({
     $or: [
       { userId: { $in: userIds } },
@@ -114,5 +120,5 @@ export const searchDoctors = catchError(async (req, res, next) => {
     ]
   }).populate({ path: "userId", select: "name email" });
 
-  res.status(200).json({ message: "Doctors retrieved successfully", count: doctors.length, doctors });
+  res.status(200).json({ count: doctors.length, doctors });
 });
