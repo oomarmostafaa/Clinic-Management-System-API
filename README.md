@@ -7,7 +7,13 @@ A robust and scalable RESTful API for a Clinic Management System built with **No
 - **Database:** Hosted on MongoDB Atlas.
 - **Deployment:** Vercel.
 
-## 🚀 Features
+## 🚀 API Documentation & Postman (Free)
+To test the API endpoints, follow these steps:
+1. Download the Postman Collection file from this repo: [Download Collection](./postman/Clinic_System_Collection.json)
+2. Open Postman and click on **Import**.
+3. Drag and drop the downloaded JSON file.
+
+> **Pro Tip:** Don't forget to set the `baseUrl` variable in Postman to: `https://clinic-management-system-api-alpha.vercel.app/`
 
 *   **Multi-Role Auth:** Secure JWT-based RBAC for `Admin`, `Doctor`, and `Patient`.
 *   **Doctor Management:** Specialized profiles, schedule management, and advanced search/filter (by specialty).

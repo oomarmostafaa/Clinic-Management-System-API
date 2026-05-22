@@ -1,0 +1,1248 @@
+{
+  "info": {
+    "_postman_id": "9397b8c2-3d67-44fa-bb27-2f365f78411f",
+    "name": "Clinic Management System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51617579",
+    "_collection_link": "https://go.postman.co/collection/51617579-9397b8c2-3d67-44fa-bb27-2f365f78411f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Sign up",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Omar\",\r\n  \"email\": \"omar1234@gmail.com\",\r\n  \"password\": \"Oo1234\",\r\n  \"age\": 22,\r\n  \"role\": \"adminfffffs\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/signup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "sign in",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"omar1234@gmail.com\",\r\n    \"password\":\"Oo1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/signin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "signin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "change password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDhlM2ZiYmU2NmM0ODQ3MWJlZjFlOCIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzc4OTc0NDM5fQ.qZtg3vmeIQ7IIGW1h8Fk6oVUkDdW2EeUnUaL8dTi0aA",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\":\"Oo1234\",\r\n    \"newPassword\":\"Oo1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/change-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forget password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"omarmo5252@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/forget-password",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forget-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "Admin only",
+          "item": [
+            {
+              "name": "get all users",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDkwMjFkOGQxNDYxNzZhYmE3OTE2YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODk3NTI3N30.OD1eWLjTEhdZo5Nt5BHz1hmJ0d4bjDUurNC8t2EZpWs",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get user by id",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDkwMjFkOGQxNDYxNzZhYmE3OTE2YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODk3NTI3N30.OD1eWLjTEhdZo5Nt5BHz1hmJ0d4bjDUurNC8t2EZpWs",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6a0b4dfdbb5da3445df6bf26"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update User",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDkwMjFkOGQxNDYxNzZhYmE3OTE2YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODk3NTI3N30.OD1eWLjTEhdZo5Nt5BHz1hmJ0d4bjDUurNC8t2EZpWs",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"role\":\"patient\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6a0b5fd92db614e5927d5741"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete user",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDkwMjFkOGQxNDYxNzZhYmE3OTE2YiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3ODk3NTI3N30.OD1eWLjTEhdZo5Nt5BHz1hmJ0d4bjDUurNC8t2EZpWs",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users/:id",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "6a0b585abdd5446713183f1e"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search user",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/users/search?email=omar@gmail.com",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "omar@gmail.com"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "any user",
+          "item": [
+            {
+              "name": "get profile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1ZmQ5MmRiNjE0ZTU5MjdkNTc0MSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzc5MTMxMTU4fQ.q4RT5kFLpkiIXk1O9JTw-CRopAtC00NZP8OT9ewmHjs",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update user profile",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1ZmQ5MmRiNjE0ZTU5MjdkNTc0MSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzc5MTMxMTU4fQ.q4RT5kFLpkiIXk1O9JTw-CRopAtC00NZP8OT9ewmHjs",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"mohamed\",\r\n    \"age\":\"88\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete user profile",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1ZmQ5MmRiNjE0ZTU5MjdkNTc0MSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzc5MTMxMTU4fQ.q4RT5kFLpkiIXk1O9JTw-CRopAtC00NZP8OT9ewmHjs",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"mohamed\",\r\n    \"age\":\"88\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/users/profile",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "doctor",
+      "item": [
+        {
+          "name": "create doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"price\": 300,\r\n    \"specialization\": \"children\",\r\n    \"userId\":\"6a08d0a543aa60e808583b54\",\r\n    \"schedule\":[{\r\n        \"day\":\"Monday\",\r\n        \"from\":\"01:00\",\r\n        \"to\":\"05:00\"\r\n    }]\r\n\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/doctors",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/doctors",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get doctor by id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/doctors/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a0ba99aceef2a9e5ad7655b"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update usrer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDhjOGFlZTNhZWU3M2YzNDJiNGRjNyIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3NzkxOTkzMjh9.rUv_x-DO9qHJi0SMshqooItypglxV1NDQm1FXlhp2ao",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"price\":\"500\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/doctors/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "doctors",
+                ":id"
+              ],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                  "type": "text",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a0ba99aceef2a9e5ad7655b"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete doctor",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "get schedule doctor",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "get doctors Specialty",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Search doctor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/doctors/search?name=omar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "doctors",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "omar"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "patient",
+      "item": [
+        {
+          "name": "add patient",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\r\n    \"medicalHistory\":[\r\n        \"blood:O+\"\r\n    ]\r\n   \r\n\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/patients/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a08c8aee3aee73f342b4dc7"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all patients",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI0ZGZkYmI1ZGEzNDQ1ZGY2YmYyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTIyNjA2N30.bNkBJRs_I92aC_ZCpKN2sTlQ_cy_vGXZAQuy6FKVo7Y",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/patients",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get patient by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI0ZGZkYmI1ZGEzNDQ1ZGY2YmYyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTIyNjA2N30.bNkBJRs_I92aC_ZCpKN2sTlQ_cy_vGXZAQuy6FKVo7Y",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"medicalHistory\":[]\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/patients/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a0ccac09136b6c8575e7d4b"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update patient",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI0ZGZkYmI1ZGEzNDQ1ZGY2YmYyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTIzMDIzMX0.8IhSnlqt1TN_A_DRMnd_Jk0Nfu4MbWcGJ8jQ9Bz2SPI",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"medicalHistory\":[\"knxnaklxk\"]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/patients/:id",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "patients",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "6a0ccac09136b6c8575e7d4b"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete patient",
+          "request": {
+            "method": "DELETE",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Search patient",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/search?email=omar@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "omar@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "add booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDhjOGFlZTNhZWU3M2YzNDJiNGRjNyIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3NzkyMzU5MzJ9.oNk0CePBvDPksI9e37zmj-aQzpUIzpSXu_J4lsObl3A",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"doctorId\": \"6a0bab4e34c96f91bb35c0c4\",\r\n  \"date\": \"2026-07-1\",\r\n  \"time\": \"1:30\"\r\n}\r\n\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all booking",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI0ZGZkYmI1ZGEzNDQ1ZGY2YmYyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTIyNjA2N30.bNkBJRs_I92aC_ZCpKN2sTlQ_cy_vGXZAQuy6FKVo7Y",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get booking for patient",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGRlMWQxY2IxYzkwM2VmNmI5MTM1NSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzc5Mjk0NjczfQ.H9Omxi7u40fLpJB-D6bdLpcovda2Hx2iHrvWLKeXbxk",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings/my-bookings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                "my-bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get doctor bookings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1YTA0NjNjMTkwYjczMjg1OTgyMSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTI5NDc3Nn0.RnJT1OwotVU0gqS9oOh9z9E0qLDdO4bAblje8xUYeIc",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings/doctor/:doctorid",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                "doctor",
+                ":doctorid"
+              ],
+              "variable": [
+                {
+                  "key": "doctorid",
+                  "value": "6a0bab4e34c96f91bb35c0c4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete booking",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGRlMWQxY2IxYzkwM2VmNmI5MTM1NSIsInJvbGUiOiJkb2N0b3IiLCJpYXQiOjE3NzkyOTgxNTB9.j1fBEVzGNSgqGafW7TGNUKhnnpoZexYxKYuif_98X4g",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings/:id booking",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                ":id booking"
+              ],
+              "variable": [
+                {
+                  "key": "id booking",
+                  "value": "6a0de44d4af69a2f6865d7b4"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "confirm booking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings/:id booking/confirm",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                ":id booking",
+                "confirm"
+              ],
+              "variable": [
+                {
+                  "key": "id booking",
+                  "value": "6a0dc9fa9210eb95f21dd6de"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "complete & finish booking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings/:id booking/complete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                ":id booking",
+                "complete"
+              ],
+              "variable": [
+                {
+                  "key": "id booking",
+                  "value": "6a0dc9fa9210eb95f21dd6de"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search booking",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/search?email=omar@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "omar@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "payment",
+      "item": [
+        {
+          "name": "for payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGUwMmQ5ZGI4NTQzODNkOTI3NzMwMSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNzc5MzAzMTMwfQ.gY071OZ8t1b9aUuRHkijMIO9onA40gFN0z8o9bVuJwE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"bookingId\":\"6a0e22cd78f26f9cefb28cae\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/payments/create-checkout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "create-checkout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all tansactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get transaction by booking id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "get transaction by id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Search payment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/payments/search?transactionId=completed",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "transactionId",
+                  "value": "completed"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "dashboard",
+      "item": [
+        {
+          "name": "dashboard details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/dashboard/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "dashboard",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "dashboard best doctor",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGI1OTRmMmJkNDIwNmFmYTM1YmQ3YSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3OTE0OTc4MX0.GhQo-Fzn1V0HoycNJtVxJlgbq1v4OKJ3KasdTJ0DV6A",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/dashboard/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "dashboard",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}
