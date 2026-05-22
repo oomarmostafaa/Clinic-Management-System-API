@@ -3,7 +3,7 @@
 A robust and scalable RESTful API for a Clinic Management System built with **Node.js**, **Express**, and **MongoDB**. The system supports multi-role authentication (Admin, Doctor, Patient), appointment booking, and a fully integrated payment gateway using **Stripe**.
 
 ## 🌐 Live Demo
-- **API Base URL:** [https://clinic-management-system-api-alpha.vercel.app/](https://clinic-management-system-api-alpha.vercel.app/)
+- **API Base URL:** [https://clinic-management-system-api-alpha.vercel.app/]
 - **Database:** Hosted on MongoDB Atlas.
 - **Deployment:** Vercel.
 
