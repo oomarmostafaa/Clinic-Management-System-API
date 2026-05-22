@@ -13,12 +13,7 @@ app.use(cors());
 await dbConnection();
 
 // Webhook Route - يجب أن يكون قبل express.json لضمان استلام البيانات الخام
-app.post(
-  "/api/v1/payments/webhook",
-  express.raw({ type: "application/json" }),
-  stripeWebhook
-);
-
+app.post("/api/v1/payments/webhook",express.raw({ type: "application/json" }),stripeWebhook);
 app.use(express.json());
 allRoutes(app);
 app.get("/", (req, res) => res.send("Hello World!"));
